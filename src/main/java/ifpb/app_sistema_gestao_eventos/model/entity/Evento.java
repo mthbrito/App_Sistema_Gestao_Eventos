@@ -1,28 +1,56 @@
 package ifpb.app_sistema_gestao_eventos.model.entity;
 
-import ifpb.app_sistema_gestao_eventos.model.enums.TipoEvento;
+import ifpb.app_sistema_gestao_eventos.model.enumeration.TipoEvento;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
-@Getter
-@Setter
+//@Getter //data
+//@Setter //data
+//@Builder //não precisa
+//@ToString //data
+
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@ToString
+@Entity
+@Table(name="TB_EVENTO")
 public class Evento {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(nullable = false, length = 50, unique = true)
     private String titulo;
 
+    @Column(nullable = false, length = 100)
     private String descricao;
 
     private LocalDate dataInicio;
 
     private LocalDate dataTermino;
 
+    @Enumerated(EnumType.STRING)
     private TipoEvento tipoEvento;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario organizador;
+
+    @ManyToOne
+    @JoinColumn(name = "sala_id")
+    private Sala sala;
+
+    @OneToMany(mappedBy = "evento")
+    private List<Inscricao> inscricoes;
+
+    public Evento(String titulo, String descricao, LocalDate dataInicio, LocalDate dataTermino, TipoEvento tipoEvento) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataTermino = dataTermino;
+        this.tipoEvento = tipoEvento;
+    }
 }
