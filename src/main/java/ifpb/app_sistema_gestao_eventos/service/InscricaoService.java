@@ -2,18 +2,15 @@ package ifpb.app_sistema_gestao_eventos.service;
 
 import ifpb.app_sistema_gestao_eventos.model.entity.Inscricao;
 import ifpb.app_sistema_gestao_eventos.repository.InscricaoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class InscricaoService {
 
     private final InscricaoRepository repository;
-
 
     public InscricaoService(InscricaoRepository repository) {
         this.repository = repository;
@@ -23,7 +20,7 @@ public class InscricaoService {
         return repository.save(inscricao);
     }
 
-    public List<Inscricao> listarTodasInscricoes() {
+    public List<Inscricao> listarInscricoes() {
         return repository.findAll();
     }
 

@@ -1,0 +1,42 @@
+package ifpb.app_sistema_gestao_eventos.controller;
+
+import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
+import ifpb.app_sistema_gestao_eventos.service.EventoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("api/sge/eventos")
+public class EventoController {
+
+    private final EventoService eventoService;
+
+    public EventoController(EventoService eventoService) {
+        this.eventoService = eventoService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Evento> salvarEvento(@RequestBody Evento evento) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvarEvento(evento));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Evento>> listarEventos() {
+        return ResponseEntity.ok(eventoService.listarEventos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Evento>> buscarEventoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(eventoService.buscarEventoPorId(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarEvento(@PathVariable Long id) {
+        eventoService.deletarEvento(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+}

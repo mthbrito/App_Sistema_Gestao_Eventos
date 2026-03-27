@@ -2,18 +2,15 @@ package ifpb.app_sistema_gestao_eventos.service;
 
 import ifpb.app_sistema_gestao_eventos.model.entity.Notificacao;
 import ifpb.app_sistema_gestao_eventos.repository.NotificacaoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class NotificacaoService {
 
     private final NotificacaoRepository repository;
-
 
     public NotificacaoService(NotificacaoRepository repository) {
         this.repository = repository;
@@ -23,7 +20,7 @@ public class NotificacaoService {
         return repository.save(notificacao);
     }
 
-    public List<Notificacao> listarTodasNotificacoes() {
+    public List<Notificacao> listarNotificacoes() {
         return repository.findAll();
     }
 

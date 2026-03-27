@@ -2,7 +2,6 @@ package ifpb.app_sistema_gestao_eventos.service;
 
 import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
 import ifpb.app_sistema_gestao_eventos.repository.EventoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 public class EventoService {
 
     private final EventoRepository repository;
@@ -24,7 +22,7 @@ public class EventoService {
         return repository.save(evento);
     }
 
-    public List<Evento> listarTodosEventos() {
+    public List<Evento> listarEventos() {
         return repository.findAll();
     }
 
