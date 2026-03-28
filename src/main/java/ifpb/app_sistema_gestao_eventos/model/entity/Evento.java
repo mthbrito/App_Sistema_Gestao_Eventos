@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 //@Getter //data
@@ -46,11 +47,14 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private List<Inscricao> inscricoes;
 
-    public Evento(String titulo, String descricao, LocalDate dataInicio, LocalDate dataTermino, TipoEvento tipoEvento) {
+    public Evento(String titulo, String descricao, LocalDate dataInicio, LocalDate dataTermino, TipoEvento tipoEvento, Usuario organizador, Sala sala) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.dataTermino = dataTermino;
         this.tipoEvento = tipoEvento;
+        this.organizador = organizador;
+        this.sala = sala;
+        this.inscricoes = new ArrayList<>();
     }
 }

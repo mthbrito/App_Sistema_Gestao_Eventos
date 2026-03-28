@@ -34,9 +34,11 @@ public class Inscricao {
     @JoinColumn(name = "evento_id")
     private Evento evento;
 
-    public Inscricao() {
+    public Inscricao(Usuario usuario, Evento evento) {
         this.dataInscricao = LocalDate.now();
         this.status = StatusInscricao.CONFIRMADA;
         this.presente = false;
+        this.usuario = usuario;
+        this.evento = evento;
     }
 }
