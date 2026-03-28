@@ -8,10 +8,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Getter //data
-//@Setter //data
-//@Builder //não precisa
-//@ToString //data
 
 @Data
 @NoArgsConstructor

@@ -17,13 +17,13 @@ public class SalaService {
         this.repository = repository;
     }
 
-    public Sala salvarSala(SalaRequestDTO sala) {
+    /*public Sala salvarSala(SalaRequestDTO sala) {
         Sala novaSala = new Sala();
         novaSala.setNome(sala.nome());
         novaSala.setCapacidade(sala.capacidade());
         novaSala.setLocalizacao(sala.localizacao());
         return repository.save(novaSala);
-    }
+    }*/
 
     public List<Sala> listarSalas() {
         return repository.findAll();

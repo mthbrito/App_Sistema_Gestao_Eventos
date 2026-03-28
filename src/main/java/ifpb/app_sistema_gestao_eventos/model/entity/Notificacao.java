@@ -4,13 +4,25 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name="TB_NOTIFICACAO")
 public class Notificacao {
-    //IMPLEMENTAR SEGUINDO EXEMPLO DAS DEMAIS
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
+
+    private String mensagem;
+
+    private LocalDateTime dataEnvio;
+
+    private boolean lida;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }

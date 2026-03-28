@@ -6,10 +6,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-//@Getter
-//@Setter
-//@Builder
-//@ToString
 @Data
 @Entity
 @Table(name="TB_INSCRICAO")

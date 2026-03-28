@@ -3,10 +3,6 @@ package ifpb.app_sistema_gestao_eventos.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-//@Getter
-//@Setter
-//@Builder
-//@ToString
 @Data
 @NoArgsConstructor
 @Entity
