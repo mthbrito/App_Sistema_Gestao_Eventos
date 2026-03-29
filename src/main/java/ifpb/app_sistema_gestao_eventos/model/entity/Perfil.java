@@ -13,22 +13,14 @@ import java.util.List;
 public class Perfil {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Enumerated(EnumType.STRING)
     private TipoPerfil nome;
 
-    @ManyToMany
-    @JoinTable(
-            name = "usuario_perfil",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "perfil_id")
-    )
-    private List<Perfil> perfis;
-
-//    @OneToMany(mappedBy = "usuario")
-//    private List<Inscricao> inscricoes;
+    @ManyToMany(mappedBy = "perfis")
+    private List<Usuario> usuarios;
 
     public Perfil(TipoPerfil nome) {
         this.nome = nome;

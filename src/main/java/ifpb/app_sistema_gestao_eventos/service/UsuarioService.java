@@ -2,7 +2,9 @@ package ifpb.app_sistema_gestao_eventos.service;
 
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioResponseDTO;
+import ifpb.app_sistema_gestao_eventos.model.entity.Perfil;
 import ifpb.app_sistema_gestao_eventos.model.entity.Usuario;
+import ifpb.app_sistema_gestao_eventos.repository.PerfilRepository;
 import ifpb.app_sistema_gestao_eventos.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +18,17 @@ import static ifpb.app_sistema_gestao_eventos.mapper.UsuarioMapper.toUsuarioResp
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final PerfilRepository perfilRepository;
 
-    public UsuarioService(UsuarioRepository repository) {
+    public UsuarioService(UsuarioRepository repository, PerfilRepository perfilRepository) {
         this.repository = repository;
+        this.perfilRepository = perfilRepository;
     }
 
     public UsuarioResponseDTO salvarUsuario(UsuarioRequestDTO usuario) {
         Usuario novoUsuario = toUsuario(usuario);
+        List<Perfil> perfis = perfilRepository.findAllById(usuario.perfisIds());
+        novoUsuario.setPerfis(perfis);
         repository.save(novoUsuario);
         return toUsuarioResponseDTO(novoUsuario);
     }

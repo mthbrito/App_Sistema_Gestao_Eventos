@@ -1,5 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
+import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoRequestDTO;
+import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Inscricao;
 import ifpb.app_sistema_gestao_eventos.service.InscricaoService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class InscricaoController {
     }
 
     @PostMapping
-    public ResponseEntity<Inscricao> salvarInscricao(@RequestBody Inscricao inscricao) {
+    public ResponseEntity<InscricaoResponseDTO> salvarInscricao(@RequestBody InscricaoRequestDTO inscricao) {
         return ResponseEntity.status(HttpStatus.CREATED).body(inscricaoService.salvarInscricao(inscricao));
     }
 

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +31,17 @@ public class Usuario {
     private TipoFuncao funcao;
 
     private LocalDate dataCadastro;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_perfil",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
+    private List<Perfil> perfis;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Inscricao> inscricoes;
 
     public Usuario(String nome, String email, String senha, TipoFuncao funcao) {
         this.nome = nome;

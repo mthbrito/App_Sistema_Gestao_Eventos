@@ -1,5 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
+import ifpb.app_sistema_gestao_eventos.model.dto.EventoRequestDTO;
+import ifpb.app_sistema_gestao_eventos.model.dto.EventoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
 import ifpb.app_sistema_gestao_eventos.service.EventoService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class EventoController {
     }
 
     @PostMapping
-    public ResponseEntity<Evento> salvarEvento(@RequestBody Evento evento) {
+    public ResponseEntity<EventoResponseDTO> salvarEvento(@RequestBody EventoRequestDTO evento) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvarEvento(evento));
     }
 

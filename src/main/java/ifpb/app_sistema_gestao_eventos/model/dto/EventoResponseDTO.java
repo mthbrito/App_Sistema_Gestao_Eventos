@@ -1,14 +1,16 @@
 package ifpb.app_sistema_gestao_eventos.model.dto;
 
-import java.time.LocalDateTime;
+import ifpb.app_sistema_gestao_eventos.model.enumeration.TipoEvento;
+
+import java.time.LocalDate;
 
 public record EventoResponseDTO(
         Long id,
         String titulo,
         String descricao,
-        LocalDateTime dataInicio,
-        LocalDateTime dataTermino,
-        String tipoEvento,
+        LocalDate dataInicio,
+        LocalDate dataTermino,
+        TipoEvento tipoEvento,
         String organizadorNome,
         String salaNome,
         String salaLocalizacao,

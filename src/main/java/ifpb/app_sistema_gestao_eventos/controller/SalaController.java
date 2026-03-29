@@ -1,6 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaRequestDTO;
+import ifpb.app_sistema_gestao_eventos.model.dto.SalaResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Sala;
 import ifpb.app_sistema_gestao_eventos.service.SalaService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class SalaController {
     }
 
     @PostMapping
-    public ResponseEntity<Sala> salvarSala(@RequestBody SalaRequestDTO sala) {
+    public ResponseEntity<SalaResponseDTO> salvarSala(@RequestBody SalaRequestDTO sala) {
         return ResponseEntity.status(HttpStatus.CREATED).body(salaService.salvarSala(sala));
     }
 

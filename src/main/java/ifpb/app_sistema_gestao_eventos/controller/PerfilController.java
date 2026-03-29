@@ -1,5 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
+import ifpb.app_sistema_gestao_eventos.model.dto.PerfilRequestDTO;
+import ifpb.app_sistema_gestao_eventos.model.dto.PerfilResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Perfil;
 import ifpb.app_sistema_gestao_eventos.service.PerfilService;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,7 @@ public class PerfilController {
     }
 
     @PostMapping
-    public ResponseEntity<Perfil> salvarPerfil(@RequestBody Perfil perfil) {
+    public ResponseEntity<PerfilResponseDTO> salvarPerfil(@RequestBody PerfilRequestDTO perfil) {
         return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.salvarPerfil(perfil));
     }
 

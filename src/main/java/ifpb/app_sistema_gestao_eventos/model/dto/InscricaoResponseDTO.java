@@ -1,11 +1,13 @@
 package ifpb.app_sistema_gestao_eventos.model.dto;
 
-import java.time.LocalDateTime;
+import ifpb.app_sistema_gestao_eventos.model.enumeration.StatusInscricao;
+
+import java.time.LocalDate;
 
 public record InscricaoResponseDTO(
         Long id,
-        LocalDateTime dataInscricao,
-        String status,
+        LocalDate dataInscricao,
+        StatusInscricao status,
         boolean presente,
         String usuarioNome,
         String eventoNome
