@@ -27,12 +27,12 @@ public class InscricaoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Inscricao>> listarInscricoes() {
+    public ResponseEntity<List<InscricaoResponseDTO>> listarInscricoes() {
         return ResponseEntity.ok(inscricaoService.listarInscricoes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Inscricao>> buscarInscricaoPorId(@PathVariable Long id) {
+    public ResponseEntity<Optional<InscricaoResponseDTO>> buscarInscricaoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(inscricaoService.buscarInscricaoPorId(id));
     }
 

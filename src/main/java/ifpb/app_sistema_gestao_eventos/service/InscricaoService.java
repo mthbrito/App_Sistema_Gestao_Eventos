@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.InscricaoMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
@@ -36,12 +37,16 @@ public class InscricaoService {
         return toInscricaoResponseDTO(novaInscricao);
     }
 
-    public List<Inscricao> listarInscricoes() {
-        return repository.findAll();
+    public List<InscricaoResponseDTO> listarInscricoes() {
+        return repository.findAll()
+                .stream()
+                .map(InscricaoMapper::toInscricaoResponseDTO)
+                .toList();
     }
 
-    public Optional<Inscricao> buscarInscricaoPorId(Long id) {
-        return repository.findById(id);
+    public Optional<InscricaoResponseDTO> buscarInscricaoPorId(Long id) {
+        return repository.findById(id)
+                .map(InscricaoMapper::toInscricaoResponseDTO);
     }
 
     public void deletarInscricao(Long id) {

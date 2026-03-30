@@ -1,5 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.NotificacaoMapper;
+import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Notificacao;
 import ifpb.app_sistema_gestao_eventos.repository.NotificacaoRepository;
 import org.springframework.stereotype.Service;
@@ -20,12 +22,16 @@ public class NotificacaoService {
         return repository.save(notificacao);
     }
 
-    public List<Notificacao> listarNotificacoes() {
-        return repository.findAll();
+    public List<NotificacaoResponseDTO> listarNotificacoes() {
+        return repository.findAll()
+                .stream()
+                .map(NotificacaoMapper::toNotificacaoResponseDTO)
+                .toList();
     }
 
-    public Optional<Notificacao> buscarNotificacaoPorId(Long id) {
-        return repository.findById(id);
+    public Optional<NotificacaoResponseDTO> buscarNotificacaoPorId(Long id) {
+        return repository.findById(id)
+                .map(NotificacaoMapper::toNotificacaoResponseDTO);
     }
 
     public void deletarNotificacao(Long id) {

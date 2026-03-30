@@ -1,5 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.InscricaoMapper;
+import ifpb.app_sistema_gestao_eventos.mapper.UsuarioMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Perfil;
@@ -33,12 +35,16 @@ public class UsuarioService {
         return toUsuarioResponseDTO(novoUsuario);
     }
 
-    public List<Usuario> listarUsuarios() {
-        return repository.findAll();
+    public List<UsuarioResponseDTO> listarUsuarios() {
+        return repository.findAll()
+                .stream()
+                .map(UsuarioMapper::toUsuarioResponseDTO)
+                .toList();
     }
 
-    public Optional<Usuario> buscarUsuarioPorId(Long id) {
-        return repository.findById(id);
+    public Optional<UsuarioResponseDTO> buscarUsuarioPorId(Long id) {
+        return repository.findById(id)
+                .map(UsuarioMapper::toUsuarioResponseDTO);
     }
 
     public void deletarUsuario(Long id) {

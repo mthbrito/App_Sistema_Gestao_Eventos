@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
+import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Notificacao;
 import ifpb.app_sistema_gestao_eventos.service.NotificacaoService;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,12 @@ public class NotificacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Notificacao>> listarNotificacoes() {
+    public ResponseEntity<List<NotificacaoResponseDTO>> listarNotificacoes() {
         return ResponseEntity.ok(notificacaoService.listarNotificacoes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Notificacao>> buscarNotificacaoPorId(@PathVariable Long id) {
+    public ResponseEntity<Optional<NotificacaoResponseDTO>> buscarNotificacaoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(notificacaoService.buscarNotificacaoPorId(id));
     }
 

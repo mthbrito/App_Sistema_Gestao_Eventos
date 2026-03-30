@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.SalaMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Sala;
@@ -27,12 +28,16 @@ public class SalaService {
         return toSalaResponseDTO(novaSala);
     }
 
-    public List<Sala> listarSalas() {
-        return repository.findAll();
+    public List<SalaResponseDTO> listarSalas() {
+        return repository.findAll()
+                .stream()
+                .map(SalaMapper::toSalaResponseDTO)
+                .toList();
     }
 
-    public Optional<Sala> buscarSalaPorId(Long id) {
-        return repository.findById(id);
+    public Optional<SalaResponseDTO> buscarSalaPorId(Long id) {
+        return repository.findById(id)
+                .map(SalaMapper::toSalaResponseDTO);
     }
 
     public void deletarSala(Long id) {

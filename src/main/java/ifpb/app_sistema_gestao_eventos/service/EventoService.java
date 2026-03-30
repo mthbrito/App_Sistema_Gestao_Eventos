@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.EventoMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.EventoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.EventoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
@@ -37,12 +38,16 @@ public class EventoService {
         return toEventoResponseDTO(novoEvento);
     }
 
-    public List<Evento> listarEventos() {
-        return repository.findAll();
+    public List<EventoResponseDTO> listarEventos() {
+        return repository.findAll()
+                .stream()
+                .map(EventoMapper::toEventoResponseDTO)
+                .toList();
     }
 
-    public Optional<Evento> buscarEventoPorId(Long id) {
-        return repository.findById(id);
+    public Optional<EventoResponseDTO> buscarEventoPorId(Long id) {
+        return repository.findById(id)
+                .map(EventoMapper::toEventoResponseDTO);
     }
 
     public void deletarEvento(Long id) {
