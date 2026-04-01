@@ -1,6 +1,7 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
 import ifpb.app_sistema_gestao_eventos.mapper.NotificacaoMapper;
+import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Notificacao;
 import ifpb.app_sistema_gestao_eventos.repository.NotificacaoRepository;
@@ -36,5 +37,16 @@ public class NotificacaoService {
 
     public void deletarNotificacao(Long id) {
         repository.deleteById(id);
+    }
+
+    public NotificacaoResponseDTO atualizarNotificacao(Long id, NotificacaoRequestDTO dto) {
+
+        Notificacao notificacao = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Notificação não encontrada"));
+
+        notificacao.setMensagem(dto.mensagem());
+        notificacao.setLida(dto.lida());
+
+        return NotificacaoMapper.toNotificacaoResponseDTO(repository.save(notificacao));
     }
 }

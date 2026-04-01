@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
+import ifpb.app_sistema_gestao_eventos.mapper.PerfilMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.PerfilRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.PerfilResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Perfil;
@@ -37,5 +38,15 @@ public class PerfilService {
 
     public void deletarPerfil(Long id) {
         repository.deleteById(id);
+    }
+
+    public PerfilResponseDTO atualizarPerfil(Long id, PerfilRequestDTO dto) {
+
+        Perfil perfil = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
+
+        perfil.setNome(dto.nome());
+
+        return PerfilMapper.toPerfilResponseDTO(repository.save(perfil));
     }
 }

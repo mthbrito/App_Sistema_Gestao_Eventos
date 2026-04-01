@@ -1,5 +1,6 @@
 package ifpb.app_sistema_gestao_eventos.controller;
 
+import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.NotificacaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Notificacao;
 import ifpb.app_sistema_gestao_eventos.service.NotificacaoService;
@@ -40,5 +41,13 @@ public class NotificacaoController {
     public ResponseEntity<Void> deletarNotificacao(@PathVariable Long id) {
         notificacaoService.deletarNotificacao(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NotificacaoResponseDTO> atualizarNotificacao(
+            @PathVariable Long id,
+            @Valid @RequestBody NotificacaoRequestDTO dto) {
+
+        return ResponseEntity.ok(notificacaoService.atualizarNotificacao(id, dto));
     }
 }

@@ -3,23 +3,28 @@ package ifpb.app_sistema_gestao_eventos.model.dto;
 import ifpb.app_sistema_gestao_eventos.model.enumeration.TipoEvento;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 public record EventoRequestDTO(
         @NotBlank
+        @Size(min = 3, max = 100)
         String titulo,
 
         @NotBlank
+        @Size(min = 5, max = 300)
         String descricao,
 
         @NotNull
-        LocalDateTime dataInicio,
+        @Future
+        LocalDate dataInicio,
 
         @NotNull
-        LocalDateTime dataTermino,
+        LocalDate dataTermino,
 
         @NotBlank
-        String tipoEvento,
+        @Size(min = 3, max = 50)
+        TipoEvento tipoEvento,
 
         @NotNull
         Long organizadorId,

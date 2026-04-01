@@ -4,6 +4,7 @@ import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Usuario;
 import ifpb.app_sistema_gestao_eventos.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,13 @@ public class UsuarioController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
         usuarioService.deletarUsuario(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRequestDTO dto) {
+
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(id, dto));
     }
 }

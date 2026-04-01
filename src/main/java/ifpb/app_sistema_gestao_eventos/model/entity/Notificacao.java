@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class Notificacao {
 
     private String mensagem;
 
-    private LocalDateTime dataEnvio;
+    private LocalDate dataEnvio;
 
     private boolean lida;
 

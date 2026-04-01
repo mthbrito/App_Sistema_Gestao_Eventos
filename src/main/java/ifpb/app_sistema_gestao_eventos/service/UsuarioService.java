@@ -50,4 +50,15 @@ public class UsuarioService {
     public void deletarUsuario(Long id) {
         repository.deleteById(id);
     }
+
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO dto) {
+
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        usuario.setNome(dto.nome());
+        usuario.setEmail(dto.email());
+
+        return UsuarioMapper.toUsuarioResponseDTO(repository.save(usuario));
+    }
 }
