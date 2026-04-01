@@ -2,7 +2,6 @@ package ifpb.app_sistema_gestao_eventos.controller;
 
 import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoResponseDTO;
-import ifpb.app_sistema_gestao_eventos.model.entity.Inscricao;
 import ifpb.app_sistema_gestao_eventos.service.InscricaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

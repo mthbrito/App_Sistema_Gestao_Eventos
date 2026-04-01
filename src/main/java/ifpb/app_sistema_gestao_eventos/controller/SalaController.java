@@ -2,7 +2,6 @@ package ifpb.app_sistema_gestao_eventos.controller;
 
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaResponseDTO;
-import ifpb.app_sistema_gestao_eventos.model.entity.Sala;
 import ifpb.app_sistema_gestao_eventos.service.SalaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
