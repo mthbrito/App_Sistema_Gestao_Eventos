@@ -10,7 +10,7 @@ import lombok.*;
 public class Sala {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false, length = 15, unique = true)

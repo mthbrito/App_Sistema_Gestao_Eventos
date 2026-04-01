@@ -53,4 +53,19 @@ public class EventoService {
     public void deletarEvento(Long id) {
         repository.deleteById(id);
     }
+
+    public EventoResponseDTO atualizarEvento(Long id, EventoRequestDTO dto) {
+
+        Evento evento = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+
+        evento.setTitulo(dto.titulo());
+        evento.setDescricao(dto.descricao());
+        evento.setDataInicio(dto.dataInicio());
+        evento.setDataTermino(dto.dataTermino());
+        evento.setTipoEvento(dto.tipoEvento());
+
+        return EventoMapper.toEventoResponseDTO(repository.save(evento));
+
+    }
 }

@@ -4,6 +4,7 @@ import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.InscricaoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Inscricao;
 import ifpb.app_sistema_gestao_eventos.service.InscricaoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class InscricaoController {
     }
 
     @PostMapping
-    public ResponseEntity<InscricaoResponseDTO> salvarInscricao(@RequestBody InscricaoRequestDTO inscricao) {
+    public ResponseEntity<InscricaoResponseDTO> salvarInscricao(@Valid @RequestBody InscricaoRequestDTO inscricao) {
         return ResponseEntity.status(HttpStatus.CREATED).body(inscricaoService.salvarInscricao(inscricao));
     }
 
@@ -42,4 +43,11 @@ public class InscricaoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<InscricaoResponseDTO> atualizarInscricao(
+            @PathVariable Long id,
+            @Valid @RequestBody InscricaoRequestDTO dto) {
+
+        return ResponseEntity.ok(inscricaoService.atualizarInscricao(id, dto));
+    }
 }

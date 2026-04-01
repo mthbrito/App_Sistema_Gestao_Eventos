@@ -4,6 +4,7 @@ import ifpb.app_sistema_gestao_eventos.model.dto.EventoRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.EventoResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Evento;
 import ifpb.app_sistema_gestao_eventos.service.EventoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class EventoController {
     }
 
     @PostMapping
-    public ResponseEntity<EventoResponseDTO> salvarEvento(@RequestBody EventoRequestDTO evento) {
+    public ResponseEntity<EventoResponseDTO> salvarEvento(@Valid @RequestBody EventoRequestDTO evento) {
         return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvarEvento(evento));
     }
 
@@ -40,5 +41,13 @@ public class EventoController {
     public ResponseEntity<Void> deletarEvento(@PathVariable Long id) {
         eventoService.deletarEvento(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EventoResponseDTO> atualizarEvento(
+            @PathVariable Long id,
+            @Valid @RequestBody EventoRequestDTO eventoRequestDTO) {
+
+        return ResponseEntity.ok(eventoService.atualizarEvento(id, eventoRequestDTO));
     }
 }

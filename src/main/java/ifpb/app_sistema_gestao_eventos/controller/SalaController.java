@@ -4,6 +4,7 @@ import ifpb.app_sistema_gestao_eventos.model.dto.SalaRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.SalaResponseDTO;
 import ifpb.app_sistema_gestao_eventos.model.entity.Sala;
 import ifpb.app_sistema_gestao_eventos.service.SalaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class SalaController {
     }
 
     @PostMapping
-    public ResponseEntity<SalaResponseDTO> salvarSala(@RequestBody SalaRequestDTO sala) {
+    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO sala) {
         return ResponseEntity.status(HttpStatus.CREATED).body(salaService.salvarSala(sala));
     }
 
@@ -40,5 +41,13 @@ public class SalaController {
     public ResponseEntity<Void> deletarSala(@PathVariable Long id) {
         salaService.deletarSala(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SalaResponseDTO> atualizarSala(
+            @PathVariable Long id,
+            @Valid @RequestBody SalaRequestDTO dto) {
+
+        return ResponseEntity.ok(salaService.atualizarSala(id, dto));
     }
 }

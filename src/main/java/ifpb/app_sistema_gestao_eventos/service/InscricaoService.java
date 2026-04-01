@@ -52,4 +52,12 @@ public class InscricaoService {
     public void deletarInscricao(Long id) {
         repository.deleteById(id);
     }
+
+    public InscricaoResponseDTO atualizarInscricao(Long id, InscricaoRequestDTO dto) {
+
+        Inscricao inscricao = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inscrição não encontrada"));
+
+        return InscricaoMapper.toInscricaoResponseDTO(repository.save(inscricao));
+    }
 }

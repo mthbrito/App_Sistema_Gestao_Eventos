@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Inscricao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private LocalDate dataInscricao;

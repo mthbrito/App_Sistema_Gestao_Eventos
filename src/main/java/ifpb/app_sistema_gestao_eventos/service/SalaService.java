@@ -43,4 +43,16 @@ public class SalaService {
     public void deletarSala(Long id) {
         repository.deleteById(id);
     }
+
+    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO dto) {
+
+        Sala sala = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
+
+        sala.setNome(dto.nome());
+        sala.setCapacidade(dto.capacidade());
+        sala.setLocalizacao(dto.localizacao());
+
+        return SalaMapper.toSalaResponseDTO(repository.save(sala));
+    }
 }
