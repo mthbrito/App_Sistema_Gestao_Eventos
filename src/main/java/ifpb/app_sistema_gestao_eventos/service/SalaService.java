@@ -16,41 +16,42 @@ import static ifpb.app_sistema_gestao_eventos.mapper.SalaMapper.toSalaResponseDT
 @Service
 public class SalaService {
 
-    private final SalaRepository repository;
+    private final SalaRepository salaRepository;
 
-    public SalaService(SalaRepository repository) {
-        this.repository = repository;
+    public SalaService(SalaRepository salaRepository) {
+        this.salaRepository = salaRepository;
     }
 
     public List<SalaResponseDTO> listarSalas() {
-        return repository.findAll()
+        return salaRepository.findAll()
                 .stream()
                 .map(SalaMapper::toSalaResponseDTO)
                 .toList();
     }
 
-    public Optional<SalaResponseDTO> buscarSalaPorId(Long id) {
-        return repository.findById(id)
-                .map(SalaMapper::toSalaResponseDTO);
+    public SalaResponseDTO buscarSalaPorId(Long id) {
+        return salaRepository.findById(id)
+                .map(SalaMapper::toSalaResponseDTO)
+                .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
     }
 
     public SalaResponseDTO salvarSala(SalaRequestDTO sala) {
         Sala novaSala = toSala(sala);
-        repository.save(novaSala);
+        salaRepository.save(novaSala);
         return toSalaResponseDTO(novaSala);
     }
 
-    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO dto) {
-        Sala sala = repository.findById(id)
+    public SalaResponseDTO atualizarSala(Long id, SalaRequestDTO sala) {
+        Sala salaAtualizada = salaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sala não encontrada"));
-        sala.setNome(dto.nome());
-        sala.setCapacidade(dto.capacidade());
-        sala.setLocalizacao(dto.localizacao());
-        return SalaMapper.toSalaResponseDTO(repository.save(sala));
+        salaAtualizada.setNome(sala.nome());
+        salaAtualizada.setCapacidade(sala.capacidade());
+        salaAtualizada.setLocalizacao(sala.localizacao());
+        return SalaMapper.toSalaResponseDTO(salaRepository.save(salaAtualizada));
     }
 
     public void deletarSala(Long id) {
-        repository.deleteById(id);
+        salaRepository.deleteById(id);
     }
 
 }

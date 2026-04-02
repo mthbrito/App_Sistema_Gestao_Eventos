@@ -28,7 +28,7 @@ public class PerfilController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Perfil>> buscarPerfilPorId(@PathVariable Long id) {
+    public ResponseEntity<Perfil> buscarPerfilPorId(@PathVariable Long id) {
         return ResponseEntity.ok(perfilService.buscarPerfilPorId(id));
     }
 

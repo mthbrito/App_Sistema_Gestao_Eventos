@@ -27,7 +27,7 @@ public class SalaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<SalaResponseDTO>> buscarSalaPorId(@PathVariable Long id) {
+    public ResponseEntity<SalaResponseDTO> buscarSalaPorId(@PathVariable Long id) {
         return ResponseEntity.ok(salaService.buscarSalaPorId(id));
     }
 

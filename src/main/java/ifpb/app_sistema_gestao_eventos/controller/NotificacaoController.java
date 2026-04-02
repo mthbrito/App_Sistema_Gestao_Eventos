@@ -28,7 +28,7 @@ public class NotificacaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<NotificacaoResponseDTO>> buscarNotificacaoPorId(@PathVariable Long id) {
+    public ResponseEntity<NotificacaoResponseDTO> buscarNotificacaoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(notificacaoService.buscarNotificacaoPorId(id));
     }
 

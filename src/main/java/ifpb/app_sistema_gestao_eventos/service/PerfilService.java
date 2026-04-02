@@ -16,34 +16,35 @@ import static ifpb.app_sistema_gestao_eventos.mapper.PerfilMapper.toPerfilRespon
 @Service
 public class PerfilService {
 
-    private final PerfilRepository repository;
+    private final PerfilRepository perfilRepository;
 
-    public PerfilService(PerfilRepository repository) {
-        this.repository = repository;
+    public PerfilService(PerfilRepository perfilRepository) {
+        this.perfilRepository = perfilRepository;
     }
 
     public List<Perfil> listarPerfis() {
-        return repository.findAll();
+        return perfilRepository.findAll();
     }
 
-    public Optional<Perfil> buscarPerfilPorId(Long id) {
-        return repository.findById(id);
+    public Perfil buscarPerfilPorId(Long id) {
+        return perfilRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
     }
 
     public PerfilResponseDTO salvarPerfil(PerfilRequestDTO perfil) {
         Perfil novoPerfil = toPerfil(perfil);
-        repository.save(novoPerfil);
+        perfilRepository.save(novoPerfil);
         return toPerfilResponseDTO(novoPerfil);
     }
 
-    public PerfilResponseDTO atualizarPerfil(Long id, PerfilRequestDTO dto) {
-        Perfil perfil = repository.findById(id)
+    public PerfilResponseDTO atualizarPerfil(Long id, PerfilRequestDTO perfil) {
+        Perfil perfilAtualizado = perfilRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
-        perfil.setNome(dto.nome());
-        return PerfilMapper.toPerfilResponseDTO(repository.save(perfil));
+        perfilAtualizado.setNome(perfil.nome());
+        return PerfilMapper.toPerfilResponseDTO(perfilRepository.save(perfilAtualizado));
     }
 
     public void deletarPerfil(Long id) {
-        repository.deleteById(id);
+        perfilRepository.deleteById(id);
     }
 }

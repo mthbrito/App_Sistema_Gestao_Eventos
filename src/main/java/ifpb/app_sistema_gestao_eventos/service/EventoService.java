@@ -24,8 +24,8 @@ public class EventoService {
     private final SalaRepository salaRepository;
 
 
-    public EventoService(EventoRepository repository, UsuarioRepository usuarioRepository, SalaRepository salaRepository) {
-        this.repository = repository;
+    public EventoService(EventoRepository eventoRepository, UsuarioRepository usuarioRepository, SalaRepository salaRepository) {
+        this.repository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
         this.salaRepository = salaRepository;
     }
@@ -37,9 +37,10 @@ public class EventoService {
                 .toList();
     }
 
-    public Optional<EventoResponseDTO> buscarEventoPorId(Long id) {
+    public EventoResponseDTO buscarEventoPorId(Long id) {
         return repository.findById(id)
-                .map(EventoMapper::toEventoResponseDTO);
+                .map(EventoMapper::toEventoResponseDTO)
+                .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
     }
 
     public EventoResponseDTO salvarEvento(EventoRequestDTO evento) {
@@ -50,15 +51,15 @@ public class EventoService {
         return toEventoResponseDTO(novoEvento);
     }
 
-    public EventoResponseDTO atualizarEvento(Long id, EventoRequestDTO dto) {
-        Evento evento = repository.findById(id)
+    public EventoResponseDTO atualizarEvento(Long id, EventoRequestDTO evento) {
+        Evento eventoAtualizado = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-        evento.setTitulo(dto.titulo());
-        evento.setDescricao(dto.descricao());
-        evento.setDataInicio(dto.dataInicio());
-        evento.setDataTermino(dto.dataTermino());
-        evento.setTipoEvento(dto.tipoEvento());
-        return EventoMapper.toEventoResponseDTO(repository.save(evento));
+        eventoAtualizado.setTitulo(evento.titulo());
+        eventoAtualizado.setDescricao(evento.descricao());
+        eventoAtualizado.setDataInicio(evento.dataInicio());
+        eventoAtualizado.setDataTermino(evento.dataTermino());
+        eventoAtualizado.setTipoEvento(evento.tipoEvento());
+        return EventoMapper.toEventoResponseDTO(repository.save(eventoAtualizado));
     }
 
     public void deletarEvento(Long id) {

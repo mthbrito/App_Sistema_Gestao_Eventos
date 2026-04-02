@@ -27,7 +27,7 @@ public class EventoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<EventoResponseDTO>> buscarEventoPorId(@PathVariable Long id) {
+    public ResponseEntity<EventoResponseDTO> buscarEventoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(eventoService.buscarEventoPorId(id));
     }
 

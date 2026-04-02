@@ -18,43 +18,47 @@ import static ifpb.app_sistema_gestao_eventos.mapper.UsuarioMapper.toUsuarioResp
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository repository;
+    private final UsuarioRepository usuarioRepository;
     private final PerfilRepository perfilRepository;
 
-    public UsuarioService(UsuarioRepository repository, PerfilRepository perfilRepository) {
-        this.repository = repository;
+    public UsuarioService(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
+        this.usuarioRepository = usuarioRepository;
         this.perfilRepository = perfilRepository;
     }
 
     public List<UsuarioResponseDTO> listarUsuarios() {
-        return repository.findAll()
+        return usuarioRepository.findAll()
                 .stream()
                 .map(UsuarioMapper::toUsuarioResponseDTO)
                 .toList();
     }
 
-    public Optional<UsuarioResponseDTO> buscarUsuarioPorId(Long id) {
-        return repository.findById(id)
-                .map(UsuarioMapper::toUsuarioResponseDTO);
+    public UsuarioResponseDTO buscarUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .map(UsuarioMapper::toUsuarioResponseDTO)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
     public UsuarioResponseDTO salvarUsuario(UsuarioRequestDTO usuario) {
         Usuario novoUsuario = toUsuario(usuario);
         List<Perfil> perfis = perfilRepository.findAllById(usuario.perfisIds());
         novoUsuario.setPerfis(perfis);
-        repository.save(novoUsuario);
+        usuarioRepository.save(novoUsuario);
         return toUsuarioResponseDTO(novoUsuario);
     }
 
-    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO dto) {
-        Usuario usuario = repository.findById(id)
+    public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO usuario) {
+        Usuario usuarioAtualizado = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        usuario.setNome(dto.nome());
-        usuario.setEmail(dto.email());
-        return UsuarioMapper.toUsuarioResponseDTO(repository.save(usuario));
+        usuarioAtualizado.setNome(usuario.nome());
+        usuarioAtualizado.setEmail(usuario.email());
+        return UsuarioMapper.toUsuarioResponseDTO(usuarioRepository.save(usuarioAtualizado));
     }
 
     public void deletarUsuario(Long id) {
-        repository.deleteById(id);
+        if(!usuarioRepository.existsById(id)) {
+            throw new RuntimeException("Evento não encontrado");
+        }
+        usuarioRepository.deleteById(id);
     }
 }

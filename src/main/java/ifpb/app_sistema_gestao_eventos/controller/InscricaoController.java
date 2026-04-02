@@ -27,7 +27,7 @@ public class InscricaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<InscricaoResponseDTO>> buscarInscricaoPorId(@PathVariable Long id) {
+    public ResponseEntity<InscricaoResponseDTO> buscarInscricaoPorId(@PathVariable Long id) {
         return ResponseEntity.ok(inscricaoService.buscarInscricaoPorId(id));
     }
 

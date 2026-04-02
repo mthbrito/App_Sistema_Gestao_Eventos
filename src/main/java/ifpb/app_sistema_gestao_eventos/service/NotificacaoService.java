@@ -13,37 +13,38 @@ import java.util.Optional;
 @Service
 public class NotificacaoService {
 
-    private final NotificacaoRepository repository;
+    private final NotificacaoRepository notificacaoRepository;
 
-    public NotificacaoService(NotificacaoRepository repository) {
-        this.repository = repository;
+    public NotificacaoService(NotificacaoRepository notificacaoRepository) {
+        this.notificacaoRepository = notificacaoRepository;
     }
 
     public List<NotificacaoResponseDTO> listarNotificacoes() {
-        return repository.findAll()
+        return notificacaoRepository.findAll()
                 .stream()
                 .map(NotificacaoMapper::toNotificacaoResponseDTO)
                 .toList();
     }
 
-    public Optional<NotificacaoResponseDTO> buscarNotificacaoPorId(Long id) {
-        return repository.findById(id)
-                .map(NotificacaoMapper::toNotificacaoResponseDTO);
+    public NotificacaoResponseDTO buscarNotificacaoPorId(Long id) {
+        return notificacaoRepository.findById(id)
+                .map(NotificacaoMapper::toNotificacaoResponseDTO)
+                .orElseThrow(() -> new RuntimeException("Notificação não encontrada"));
     }
 
     public Notificacao salvarNotificacao(Notificacao notificacao) {
-        return repository.save(notificacao);
+        return notificacaoRepository.save(notificacao);
     }
 
-    public NotificacaoResponseDTO atualizarNotificacao(Long id, NotificacaoRequestDTO dto) {
-        Notificacao notificacao = repository.findById(id)
+    public NotificacaoResponseDTO atualizarNotificacao(Long id, NotificacaoRequestDTO notificacao) {
+        Notificacao notificacaoAtualizada = notificacaoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notificação não encontrada"));
-        notificacao.setMensagem(dto.mensagem());
-        notificacao.setLida(dto.lida());
-        return NotificacaoMapper.toNotificacaoResponseDTO(repository.save(notificacao));
+        notificacaoAtualizada.setMensagem(notificacao.mensagem());
+        notificacaoAtualizada.setLida(notificacao.lida());
+        return NotificacaoMapper.toNotificacaoResponseDTO(notificacaoRepository.save(notificacaoAtualizada));
     }
 
     public void deletarNotificacao(Long id) {
-        repository.deleteById(id);
+        notificacaoRepository.deleteById(id);
     }
 }
