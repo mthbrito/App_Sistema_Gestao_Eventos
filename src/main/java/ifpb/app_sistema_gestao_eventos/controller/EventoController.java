@@ -21,11 +21,6 @@ public class EventoController {
         this.eventoService = eventoService;
     }
 
-    @PostMapping
-    public ResponseEntity<EventoResponseDTO> salvarEvento(@Valid @RequestBody EventoRequestDTO evento) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvarEvento(evento));
-    }
-
     @GetMapping
     public ResponseEntity<List<EventoResponseDTO>> listarEventos() {
         return ResponseEntity.ok(eventoService.listarEventos());
@@ -36,17 +31,22 @@ public class EventoController {
         return ResponseEntity.ok(eventoService.buscarEventoPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarEvento(@PathVariable Long id) {
-        eventoService.deletarEvento(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    @PostMapping
+    public ResponseEntity<EventoResponseDTO> salvarEvento(@Valid @RequestBody EventoRequestDTO evento) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(eventoService.salvarEvento(evento));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<EventoResponseDTO> atualizarEvento(
             @PathVariable Long id,
             @Valid @RequestBody EventoRequestDTO eventoRequestDTO) {
-
         return ResponseEntity.ok(eventoService.atualizarEvento(id, eventoRequestDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarEvento(@PathVariable Long id) {
+        eventoService.deletarEvento(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

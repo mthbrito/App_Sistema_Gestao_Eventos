@@ -22,11 +22,6 @@ public class PerfilController {
         this.perfilService = perfilService;
     }
 
-    @PostMapping
-    public ResponseEntity<PerfilResponseDTO> salvarPerfil(@RequestBody PerfilRequestDTO perfil) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.salvarPerfil(perfil));
-    }
-
     @GetMapping
     public ResponseEntity<List<Perfil>> listarPerfis() {
         return ResponseEntity.ok(perfilService.listarPerfis());
@@ -37,17 +32,22 @@ public class PerfilController {
         return ResponseEntity.ok(perfilService.buscarPerfilPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarPerfil(@PathVariable Long id) {
-        perfilService.deletarPerfil(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PostMapping
+    public ResponseEntity<PerfilResponseDTO> salvarPerfil(@RequestBody PerfilRequestDTO perfil) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(perfilService.salvarPerfil(perfil));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PerfilResponseDTO> atualizarPerfil(
             @PathVariable Long id,
             @Valid @RequestBody PerfilRequestDTO dto) {
-
         return ResponseEntity.ok(perfilService.atualizarPerfil(id, dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPerfil(@PathVariable Long id) {
+        perfilService.deletarPerfil(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

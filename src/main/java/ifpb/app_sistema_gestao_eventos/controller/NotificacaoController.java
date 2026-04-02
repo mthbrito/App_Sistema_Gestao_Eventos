@@ -22,11 +22,6 @@ public class NotificacaoController {
         this.notificacaoService = notificacaoService;
     }
 
-    @PostMapping
-    public ResponseEntity<Notificacao> salvarNotificacao(@Valid @RequestBody Notificacao notificacao) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(notificacaoService.salvarNotificacao(notificacao));
-    }
-
     @GetMapping
     public ResponseEntity<List<NotificacaoResponseDTO>> listarNotificacoes() {
         return ResponseEntity.ok(notificacaoService.listarNotificacoes());
@@ -37,17 +32,21 @@ public class NotificacaoController {
         return ResponseEntity.ok(notificacaoService.buscarNotificacaoPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarNotificacao(@PathVariable Long id) {
-        notificacaoService.deletarNotificacao(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PostMapping
+    public ResponseEntity<Notificacao> salvarNotificacao(@Valid @RequestBody Notificacao notificacao) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(notificacaoService.salvarNotificacao(notificacao));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<NotificacaoResponseDTO> atualizarNotificacao(
             @PathVariable Long id,
             @Valid @RequestBody NotificacaoRequestDTO dto) {
-
         return ResponseEntity.ok(notificacaoService.atualizarNotificacao(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarNotificacao(@PathVariable Long id) {
+        notificacaoService.deletarNotificacao(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

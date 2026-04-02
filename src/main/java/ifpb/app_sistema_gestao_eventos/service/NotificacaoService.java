@@ -19,10 +19,6 @@ public class NotificacaoService {
         this.repository = repository;
     }
 
-    public Notificacao salvarNotificacao(Notificacao notificacao) {
-        return repository.save(notificacao);
-    }
-
     public List<NotificacaoResponseDTO> listarNotificacoes() {
         return repository.findAll()
                 .stream()
@@ -35,18 +31,19 @@ public class NotificacaoService {
                 .map(NotificacaoMapper::toNotificacaoResponseDTO);
     }
 
-    public void deletarNotificacao(Long id) {
-        repository.deleteById(id);
+    public Notificacao salvarNotificacao(Notificacao notificacao) {
+        return repository.save(notificacao);
     }
 
     public NotificacaoResponseDTO atualizarNotificacao(Long id, NotificacaoRequestDTO dto) {
-
         Notificacao notificacao = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notificação não encontrada"));
-
         notificacao.setMensagem(dto.mensagem());
         notificacao.setLida(dto.lida());
-
         return NotificacaoMapper.toNotificacaoResponseDTO(repository.save(notificacao));
+    }
+
+    public void deletarNotificacao(Long id) {
+        repository.deleteById(id);
     }
 }

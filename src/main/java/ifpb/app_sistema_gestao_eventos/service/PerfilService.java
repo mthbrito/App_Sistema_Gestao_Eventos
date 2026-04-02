@@ -22,12 +22,6 @@ public class PerfilService {
         this.repository = repository;
     }
 
-    public PerfilResponseDTO salvarPerfil(PerfilRequestDTO perfil) {
-        Perfil novoPerfil = toPerfil(perfil);
-        repository.save(novoPerfil);
-        return toPerfilResponseDTO(novoPerfil);
-    }
-
     public List<Perfil> listarPerfis() {
         return repository.findAll();
     }
@@ -36,17 +30,20 @@ public class PerfilService {
         return repository.findById(id);
     }
 
-    public void deletarPerfil(Long id) {
-        repository.deleteById(id);
+    public PerfilResponseDTO salvarPerfil(PerfilRequestDTO perfil) {
+        Perfil novoPerfil = toPerfil(perfil);
+        repository.save(novoPerfil);
+        return toPerfilResponseDTO(novoPerfil);
     }
 
     public PerfilResponseDTO atualizarPerfil(Long id, PerfilRequestDTO dto) {
-
         Perfil perfil = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado"));
-
         perfil.setNome(dto.nome());
-
         return PerfilMapper.toPerfilResponseDTO(repository.save(perfil));
+    }
+
+    public void deletarPerfil(Long id) {
+        repository.deleteById(id);
     }
 }

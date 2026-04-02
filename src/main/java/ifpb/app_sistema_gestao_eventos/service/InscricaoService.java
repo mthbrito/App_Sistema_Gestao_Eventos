@@ -29,14 +29,6 @@ public class InscricaoService {
         this.eventoRepository = eventoRepository;
     }
 
-    public InscricaoResponseDTO salvarInscricao(InscricaoRequestDTO inscricao) {
-        Usuario usuario = usuarioRepository.findById(inscricao.usuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        Evento evento = eventoRepository.findById(inscricao.eventoId()).orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-        Inscricao novaInscricao = new Inscricao(usuario, evento);
-        repository.save(novaInscricao);
-        return toInscricaoResponseDTO(novaInscricao);
-    }
-
     public List<InscricaoResponseDTO> listarInscricoes() {
         return repository.findAll()
                 .stream()
@@ -49,15 +41,21 @@ public class InscricaoService {
                 .map(InscricaoMapper::toInscricaoResponseDTO);
     }
 
-    public void deletarInscricao(Long id) {
-        repository.deleteById(id);
+    public InscricaoResponseDTO salvarInscricao(InscricaoRequestDTO inscricao) {
+        Usuario usuario = usuarioRepository.findById(inscricao.usuarioId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Evento evento = eventoRepository.findById(inscricao.eventoId()).orElseThrow(() -> new RuntimeException("Evento não encontrado"));
+        Inscricao novaInscricao = new Inscricao(usuario, evento);
+        repository.save(novaInscricao);
+        return toInscricaoResponseDTO(novaInscricao);
     }
 
     public InscricaoResponseDTO atualizarInscricao(Long id, InscricaoRequestDTO dto) {
-
         Inscricao inscricao = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inscrição não encontrada"));
-
         return InscricaoMapper.toInscricaoResponseDTO(repository.save(inscricao));
+    }
+
+    public void deletarInscricao(Long id) {
+        repository.deleteById(id);
     }
 }

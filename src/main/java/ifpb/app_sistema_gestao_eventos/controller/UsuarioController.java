@@ -22,11 +22,6 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> salvarUsuario(@RequestBody UsuarioRequestDTO usuario) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuario));
-    }
-
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
         return ResponseEntity.ok(usuarioService.listarUsuarios());
@@ -37,17 +32,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
-        usuarioService.deletarUsuario(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PostMapping
+    public ResponseEntity<UsuarioResponseDTO> salvarUsuario(@RequestBody UsuarioRequestDTO usuario) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.salvarUsuario(usuario));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
             @PathVariable Long id,
             @Valid @RequestBody UsuarioRequestDTO dto) {
-
         return ResponseEntity.ok(usuarioService.atualizarUsuario(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+        usuarioService.deletarUsuario(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

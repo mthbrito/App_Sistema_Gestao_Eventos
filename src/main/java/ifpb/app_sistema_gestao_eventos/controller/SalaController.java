@@ -21,11 +21,6 @@ public class SalaController {
         this.salaService = salaService;
     }
 
-    @PostMapping
-    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO sala) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(salaService.salvarSala(sala));
-    }
-
     @GetMapping
     public ResponseEntity<List<SalaResponseDTO>> listarSalas() {
         return ResponseEntity.ok(salaService.listarSalas());
@@ -36,17 +31,21 @@ public class SalaController {
         return ResponseEntity.ok(salaService.buscarSalaPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarSala(@PathVariable Long id) {
-        salaService.deletarSala(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PostMapping
+    public ResponseEntity<SalaResponseDTO> salvarSala(@Valid @RequestBody SalaRequestDTO sala) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(salaService.salvarSala(sala));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SalaResponseDTO> atualizarSala(
             @PathVariable Long id,
             @Valid @RequestBody SalaRequestDTO dto) {
-
         return ResponseEntity.ok(salaService.atualizarSala(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarSala(@PathVariable Long id) {
+        salaService.deletarSala(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

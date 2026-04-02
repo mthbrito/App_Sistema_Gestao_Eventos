@@ -23,7 +23,6 @@ public record EventoRequestDTO(
         LocalDate dataTermino,
 
         @NotBlank
-        @Size(min = 3, max = 50)
         TipoEvento tipoEvento,
 
         @NotNull

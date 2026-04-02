@@ -21,11 +21,6 @@ public class InscricaoController {
         this.inscricaoService = inscricaoService;
     }
 
-    @PostMapping
-    public ResponseEntity<InscricaoResponseDTO> salvarInscricao(@Valid @RequestBody InscricaoRequestDTO inscricao) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(inscricaoService.salvarInscricao(inscricao));
-    }
-
     @GetMapping
     public ResponseEntity<List<InscricaoResponseDTO>> listarInscricoes() {
         return ResponseEntity.ok(inscricaoService.listarInscricoes());
@@ -36,17 +31,21 @@ public class InscricaoController {
         return ResponseEntity.ok(inscricaoService.buscarInscricaoPorId(id));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarInscricao(@PathVariable Long id) {
-        inscricaoService.deletarInscricao(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    @PostMapping
+    public ResponseEntity<InscricaoResponseDTO> salvarInscricao(@Valid @RequestBody InscricaoRequestDTO inscricao) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(inscricaoService.salvarInscricao(inscricao));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<InscricaoResponseDTO> atualizarInscricao(
             @PathVariable Long id,
             @Valid @RequestBody InscricaoRequestDTO dto) {
-
         return ResponseEntity.ok(inscricaoService.atualizarInscricao(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarInscricao(@PathVariable Long id) {
+        inscricaoService.deletarInscricao(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

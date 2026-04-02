@@ -30,14 +30,6 @@ public class EventoService {
         this.salaRepository = salaRepository;
     }
 
-    public EventoResponseDTO salvarEvento(EventoRequestDTO evento) {
-        Evento novoEvento = toEvento(evento);
-        novoEvento.setOrganizador(usuarioRepository.findById(evento.organizadorId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado")));
-        novoEvento.setSala(salaRepository.findById(evento.salaId()).orElseThrow(() -> new RuntimeException("Sala não encontrada")));
-        repository.save(novoEvento);
-        return toEventoResponseDTO(novoEvento);
-    }
-
     public List<EventoResponseDTO> listarEventos() {
         return repository.findAll()
                 .stream()
@@ -50,22 +42,26 @@ public class EventoService {
                 .map(EventoMapper::toEventoResponseDTO);
     }
 
-    public void deletarEvento(Long id) {
-        repository.deleteById(id);
+    public EventoResponseDTO salvarEvento(EventoRequestDTO evento) {
+        Evento novoEvento = toEvento(evento);
+        novoEvento.setOrganizador(usuarioRepository.findById(evento.organizadorId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado")));
+        novoEvento.setSala(salaRepository.findById(evento.salaId()).orElseThrow(() -> new RuntimeException("Sala não encontrada")));
+        repository.save(novoEvento);
+        return toEventoResponseDTO(novoEvento);
     }
 
     public EventoResponseDTO atualizarEvento(Long id, EventoRequestDTO dto) {
-
         Evento evento = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento não encontrado"));
-
         evento.setTitulo(dto.titulo());
         evento.setDescricao(dto.descricao());
         evento.setDataInicio(dto.dataInicio());
         evento.setDataTermino(dto.dataTermino());
         evento.setTipoEvento(dto.tipoEvento());
-
         return EventoMapper.toEventoResponseDTO(repository.save(evento));
+    }
 
+    public void deletarEvento(Long id) {
+        repository.deleteById(id);
     }
 }

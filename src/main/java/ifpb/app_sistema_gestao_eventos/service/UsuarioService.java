@@ -1,6 +1,5 @@
 package ifpb.app_sistema_gestao_eventos.service;
 
-import ifpb.app_sistema_gestao_eventos.mapper.InscricaoMapper;
 import ifpb.app_sistema_gestao_eventos.mapper.UsuarioMapper;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioRequestDTO;
 import ifpb.app_sistema_gestao_eventos.model.dto.UsuarioResponseDTO;
@@ -27,14 +26,6 @@ public class UsuarioService {
         this.perfilRepository = perfilRepository;
     }
 
-    public UsuarioResponseDTO salvarUsuario(UsuarioRequestDTO usuario) {
-        Usuario novoUsuario = toUsuario(usuario);
-        List<Perfil> perfis = perfilRepository.findAllById(usuario.perfisIds());
-        novoUsuario.setPerfis(perfis);
-        repository.save(novoUsuario);
-        return toUsuarioResponseDTO(novoUsuario);
-    }
-
     public List<UsuarioResponseDTO> listarUsuarios() {
         return repository.findAll()
                 .stream()
@@ -47,18 +38,23 @@ public class UsuarioService {
                 .map(UsuarioMapper::toUsuarioResponseDTO);
     }
 
-    public void deletarUsuario(Long id) {
-        repository.deleteById(id);
+    public UsuarioResponseDTO salvarUsuario(UsuarioRequestDTO usuario) {
+        Usuario novoUsuario = toUsuario(usuario);
+        List<Perfil> perfis = perfilRepository.findAllById(usuario.perfisIds());
+        novoUsuario.setPerfis(perfis);
+        repository.save(novoUsuario);
+        return toUsuarioResponseDTO(novoUsuario);
     }
 
     public UsuarioResponseDTO atualizarUsuario(Long id, UsuarioRequestDTO dto) {
-
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
         usuario.setNome(dto.nome());
         usuario.setEmail(dto.email());
-
         return UsuarioMapper.toUsuarioResponseDTO(repository.save(usuario));
+    }
+
+    public void deletarUsuario(Long id) {
+        repository.deleteById(id);
     }
 }
