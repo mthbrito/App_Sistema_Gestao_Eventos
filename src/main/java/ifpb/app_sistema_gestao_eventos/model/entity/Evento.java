@@ -4,7 +4,7 @@ import ifpb.app_sistema_gestao_eventos.model.enumeration.TipoEvento;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +26,10 @@ public class Evento {
     private String descricao;
 
     @Column(nullable = false)
-    private LocalDate dataInicio;
+    private LocalDateTime dataInicio;
 
     @Column(nullable = false)
-    private LocalDate dataTermino;
+    private LocalDateTime dataTermino;
 
     @Enumerated(EnumType.STRING)
     private TipoEvento tipoEvento;
@@ -45,7 +45,7 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private List<Inscricao> inscricoes;
 
-    public Evento(String titulo, String descricao, LocalDate dataInicio, LocalDate dataTermino, TipoEvento tipoEvento, Usuario organizador, Sala sala) {
+    public Evento(String titulo, String descricao, LocalDateTime dataInicio, LocalDateTime dataTermino, TipoEvento tipoEvento, Usuario organizador, Sala sala) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataInicio = dataInicio;

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
@@ -20,8 +20,8 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
             """)
     boolean existsBySalaIdAndHorarioConflitante(
             @Param("salaId") Long salaId,
-            @Param("inicio") LocalDate inicio,
-            @Param("termino") LocalDate termino,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("termino") LocalDateTime termino,
             @Param("idIgnorar") Long idIgnorar
     );
 }

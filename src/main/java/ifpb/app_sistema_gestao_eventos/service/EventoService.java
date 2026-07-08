@@ -15,7 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static ifpb.app_sistema_gestao_eventos.mapper.EventoMapper.toEvento;
 import static ifpb.app_sistema_gestao_eventos.mapper.EventoMapper.toEventoResponseDTO;
@@ -84,13 +84,13 @@ public class EventoService {
         eventoRepository.deleteById(id);
     }
 
-    private void validarDatas(LocalDate inicio, LocalDate termino) {
+    private void validarDatas(LocalDateTime inicio, LocalDateTime termino) {
         if (!inicio.isBefore(termino)) {
-            throw new RegraDeNegocioException("Data de início deve ser anterior à data de término");
+            throw new RegraDeNegocioException("Data/hora de início deve ser anterior à data/hora de término");
         }
     }
 
-    private void validarDisponibilidaDeSala(Long salaId, LocalDate inicio, LocalDate termino, Long idIgnorar) {
+    private void validarDisponibilidaDeSala(Long salaId, LocalDateTime inicio, LocalDateTime termino, Long idIgnorar) {
         boolean ocupada = eventoRepository.existsBySalaIdAndHorarioConflitante(salaId, inicio, termino, idIgnorar);
         if (ocupada) {
             throw new EntidadeJaCadastradaException("Sala já está ocupada nesse horário");

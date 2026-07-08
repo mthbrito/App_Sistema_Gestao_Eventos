@@ -3,7 +3,7 @@ package ifpb.app_sistema_gestao_eventos.model.dto;
 import ifpb.app_sistema_gestao_eventos.model.enumeration.TipoEvento;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public record EventoRequestDTO(
@@ -17,11 +17,11 @@ public record EventoRequestDTO(
 
         @NotNull
         @FutureOrPresent
-        LocalDate dataInicio,
+        LocalDateTime dataInicio,
 
         @NotNull
         @Future
-        LocalDate dataTermino,
+        LocalDateTime dataTermino,
 
         @NotNull
         TipoEvento tipoEvento,
