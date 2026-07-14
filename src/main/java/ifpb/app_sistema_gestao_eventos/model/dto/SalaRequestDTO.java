@@ -10,6 +10,9 @@ public record SalaRequestDTO(
         int capacidade,
 
         @NotBlank
-        String localizacao
+        String localizacao,
+
+        @NotBlank
+        String bloco
 ) {
 }

@@ -4,6 +4,7 @@ public record SalaResponseDTO(
         Long id,
         String nome,
         int capacidade,
-        String localizacao
+        String localizacao,
+        String bloco
 ) {
 }

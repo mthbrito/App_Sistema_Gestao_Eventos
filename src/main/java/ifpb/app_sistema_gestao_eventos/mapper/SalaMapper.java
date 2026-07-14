@@ -10,7 +10,8 @@ public class SalaMapper {
         return new Sala(
                 sala.nome(),
                 sala.capacidade(),
-                sala.localizacao()
+                sala.localizacao(),
+                sala.bloco()
         );
     }
 
@@ -19,7 +20,8 @@ public class SalaMapper {
                 sala.getId(),
                 sala.getNome(),
                 sala.getCapacidade(),
-                sala.getLocalizacao()
+                sala.getLocalizacao(),
+                sala.getBloco()
         );
     }
 }

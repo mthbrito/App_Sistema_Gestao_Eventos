@@ -51,6 +51,7 @@ public class SalaService {
         salaAtualizada.setNome(sala.nome());
         salaAtualizada.setCapacidade(sala.capacidade());
         salaAtualizada.setLocalizacao(sala.localizacao());
+        salaAtualizada.setBloco(sala.bloco());
         return toSalaResponseDTO(salaRepository.save(salaAtualizada));
     }
 

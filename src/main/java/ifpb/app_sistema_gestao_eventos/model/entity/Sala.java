@@ -22,9 +22,13 @@ public class Sala {
     @Column(nullable = false, length = 50)
     private String localizacao;
 
-    public Sala(String nome, int capacidade, String localizacao) {
+    @Column(length = 30)
+    private String bloco;
+
+    public Sala(String nome, int capacidade, String localizacao, String bloco) {
         this.nome = nome;
         this.capacidade = capacidade;
         this.localizacao = localizacao;
+        this.bloco = bloco;
     }
 }

@@ -16,5 +16,6 @@ public record EventoResponseDTO(
         Long salaId,
         String salaNome,
         String salaLocalizacao,
+        String salaBloco,
         int totalInscricoes
 ) {}

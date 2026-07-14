@@ -31,6 +31,7 @@ public class EventoMapper {
                 evento.getSala().getId(),
                 evento.getSala().getNome(),
                 evento.getSala().getLocalizacao(),
+                evento.getSala().getBloco(),
                 evento.getInscricoes().size()
         );
     }
